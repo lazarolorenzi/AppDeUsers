@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { Picker } from '@react-native-picker/picker'; // Corrigir importação do Picker
+import { Picker } from '@react-native-picker/picker';
 
 const AddUserScreen = ({ navigation }: { navigation: any }) => {
   const [name, setName] = useState('');
@@ -12,7 +12,7 @@ const AddUserScreen = ({ navigation }: { navigation: any }) => {
 
   const addUser = async () => {
     try {
-      await axios.post('http://192.168.1.117/users', {
+      await axios.post('http://192.168.1.117:3000/users', {
         name,
         email,
         login,
@@ -20,7 +20,7 @@ const AddUserScreen = ({ navigation }: { navigation: any }) => {
         city,
       });
       Alert.alert('Sucesso', 'Usuário adicionado com sucesso!');
-      navigation.goBack(); // Volta para a tela anterior após adicionar o usuário
+      navigation.goBack(); 
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível adicionar o usuário.');
     }
@@ -29,6 +29,7 @@ const AddUserScreen = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Adicionar Novo Usuário</Text>
+
       <TextInput
         placeholder="Nome"
         value={name}
@@ -55,17 +56,25 @@ const AddUserScreen = ({ navigation }: { navigation: any }) => {
         style={styles.input}
         secureTextEntry
       />
-      <Picker
-        selectedValue={city}
-        onValueChange={(itemValue) => setCity(itemValue)}
-        style={styles.input}
-      >
-        <Picker.Item label="Selecione uma cidade" value="" />
-        <Picker.Item label="São Paulo" value="São Paulo" />
-        <Picker.Item label="Rio de Janeiro" value="Rio de Janeiro" />
-        <Picker.Item label="Belo Horizonte" value="Belo Horizonte" />
-      </Picker>
-      <Button title="Adicionar Usuário" onPress={addUser} />
+      
+   
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={city}
+          onValueChange={(itemValue) => setCity(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Selecione uma cidade" value="" />
+          <Picker.Item label="São Paulo" value="São Paulo" />
+          <Picker.Item label="Rio de Janeiro" value="Rio de Janeiro" />
+          <Picker.Item label="Belo Horizonte" value="Belo Horizonte" />
+        </Picker>
+      </View>
+
+     
+      <TouchableOpacity style={styles.button} onPress={addUser}>
+        <Text style={styles.buttonText}>Adicionar Usuário</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -74,20 +83,61 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#F2F2F2', 
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: 'center',
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     marginBottom: 20,
-    borderRadius: 5,
+    borderRadius: 12, 
+    backgroundColor: '#fff',
+    elevation: 2, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 12, 
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    elevation: 2, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    marginBottom: 20,
+  },
+  picker: {
+    padding: 10,
+  },
+  button: {
+    backgroundColor: '#007bff',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 20, 
+    alignItems: 'center',
+    elevation: 3, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 

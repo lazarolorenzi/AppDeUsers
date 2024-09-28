@@ -20,7 +20,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://192.168.1.117/users');
+        const response = await axios.get('http://192.168.1.117:3000/users');
         setUsers(response.data);
       } catch (error) {
         Alert.alert('Erro', 'Não foi possível carregar os usuários.');
@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   // Função para excluir um usuário
   const deleteUser = async (userId: number) => {
     try {
-      await axios.delete(`http://192.168.1.117/users/${userId}`);
+      await axios.delete(`http://192.168.1.117:3000/users/${userId}`);
       Alert.alert('Sucesso', 'Usuário excluído com sucesso!');
       setUsers(users.filter((user) => user.id !== userId));
     } catch (error) {

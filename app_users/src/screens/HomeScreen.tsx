@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, FlatList, Button, Alert, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, FlatList, Alert, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import UserCard from '../components/UserCard';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Definindo o tipo User
 interface User {
@@ -15,22 +16,24 @@ interface User {
 const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('http://192.168.1.117:3000/users');
-        setUsers(response.data);
-      } catch (error) {
-        Alert.alert('Erro', 'Não foi possível carregar os usuários.');
-      }
-    };
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://192.168.1.117:3000/users');
+      setUsers(response.data);
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível carregar os usuários.');
+    }
+  };
 
-    fetchUsers();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchUsers();
+    }, [])
+  );
 
   const deleteUser = async (userId: number) => {
     try {
-      await axios.delete(`http://192.168.1.117/users/${userId}`);
+      await axios.delete(`http://192.168.1.117:3000/users/${userId}`);
       Alert.alert('Sucesso', 'Usuário excluído com sucesso!');
       setUsers(users.filter((user) => user.id !== userId));
     } catch (error) {
@@ -39,8 +42,8 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   };
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
-
+    <View style={styles.container}>
+      {/* FlatList minimalista */}
       <FlatList
         data={users}
         keyExtractor={(user) => user.id.toString()}
@@ -52,9 +55,21 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             onPressDelete={() => deleteUser(item.id)}
           />
         )}
+        contentContainerStyle={styles.list}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F2F2F2', // Fundo claro para melhor contraste
+    paddingHorizontal: 16,
+  },
+  list: {
+    paddingBottom: 16,
+  },
+});
 
 export default HomeScreen;

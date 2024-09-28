@@ -3,15 +3,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
-
-// Importando as telas do projeto
 import HomeScreen from "./src/screens/HomeScreen";
 import UserDetailsScreen from "./src/screens/UserDetailsScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 import AddUserScreen from "./src/screens/AddUserScreen";
 import EditUserScreen from "./src/screens/EditUserScreen";
 
-// Definindo os parâmetros que as telas esperam
+
 type RootStackParamList = {
   Home: undefined;
   UserDetails: { userId: number };
@@ -24,9 +22,9 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator>
-      {/* Aba Home */}
+      
       <Tab.Screen
-        name="HomeTab"
+        name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -36,9 +34,8 @@ const TabNavigator = () => {
         }}
       />
       
-      {/* Aba para Adicionar Usuário */}
       <Tab.Screen
-        name="AddUserTab"
+        name="Adicionar Usuario"
         component={AddUserScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -48,9 +45,9 @@ const TabNavigator = () => {
         }}
       />
 
-      {/* Aba About */}
+   
       <Tab.Screen
-        name="AboutTab"
+        name="Sobre"
         component={AboutScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -90,7 +87,6 @@ const HomeStackNavigator = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      {/* Inicia a navegação usando o Stack que contém as Tabs */}
       <HomeStackNavigator />
     </NavigationContainer>
   );

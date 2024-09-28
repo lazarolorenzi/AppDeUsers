@@ -1,18 +1,26 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-// Certifique-se de que as props estão sendo passadas corretamente para `UserCard`
 const UserCard = ({ user, onPressDetails, onPressEdit, onPressDelete }: any) => {
   return (
     <View style={styles.card}>
+    
+      <View style={styles.highlightLine} />
+      
       <Text style={styles.name}>{user.name}</Text>
       <Text style={styles.email}>{user.email}</Text>
 
-      {/* Botões para Detalhes, Editar e Excluir */}
+      
       <View style={styles.buttonContainer}>
-        <Button title="Detalhes" onPress={onPressDetails} />
-        <Button title="Editar" onPress={onPressEdit} color="orange" />
-        <Button title="Excluir" onPress={onPressDelete} color="red" />
+        <TouchableOpacity style={[styles.button, styles.detailsButton]} onPress={onPressDetails}>
+          <Text style={styles.buttonText}>Detalhes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.editButton]} onPress={onPressEdit}>
+          <Text style={styles.buttonText}>Editar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={onPressDelete}>
+          <Text style={styles.buttonText}>Excluir</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -20,23 +28,56 @@ const UserCard = ({ user, onPressDetails, onPressEdit, onPressDelete }: any) => 
 
 const styles = StyleSheet.create({
   card: {
-    padding: 10,
+    padding: 16,
+    marginBottom: 16,
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  
+  highlightLine: {
+    height: 4,
+    backgroundColor: '#000', 
+    borderTopLeftRadius: 12, 
+    borderTopRightRadius: 12,
     marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
   },
   name: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
+    marginBottom: 4,
   },
   email: {
     color: '#666',
-    marginBottom: 10,
+    marginBottom: 12,
+    fontSize: 16,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  button: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20, 
+  },
+  detailsButton: {
+    backgroundColor: '#007bff',
+  },
+  editButton: {
+    backgroundColor: '#ffc107',
+  },
+  deleteButton: {
+    backgroundColor: '#dc3545',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });
 
