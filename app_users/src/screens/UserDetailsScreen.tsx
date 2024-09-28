@@ -9,7 +9,7 @@ const UserDetailsScreen = ({ route }: { route: any }) => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${userId}`);
+        const response = await axios.get(`http://192.168.1.117/users/${userId}`);
         setUser(response.data);
       } catch (error) {
         Alert.alert('Erro', 'Não foi possível carregar os detalhes do usuário.');

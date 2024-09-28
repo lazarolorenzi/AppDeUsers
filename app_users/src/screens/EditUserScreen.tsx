@@ -15,7 +15,7 @@ const EditUserScreen = ({ route, navigation }: { route: any, navigation: any }) 
     // Função para buscar os dados do usuário por ID
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/users/${userId}`);
+        const response = await axios.get(`http://192.168.1.117/users/${userId}`);
         const user = response.data;
         setName(user.name);
         setEmail(user.email);
@@ -31,7 +31,7 @@ const EditUserScreen = ({ route, navigation }: { route: any, navigation: any }) 
 
   const updateUser = async () => {
     try {
-      await axios.put(`http://localhost:3000/users/${userId}`, {
+      await axios.put(`http://192.168.1.117/users/${userId}`, {
         name,
         email,
         login,

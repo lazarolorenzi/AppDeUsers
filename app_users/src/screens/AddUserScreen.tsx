@@ -12,7 +12,7 @@ const AddUserScreen = ({ navigation }: { navigation: any }) => {
 
   const addUser = async () => {
     try {
-      await axios.post('http://localhost:3000/users', {
+      await axios.post('http://192.168.1.117/users', {
         name,
         email,
         login,

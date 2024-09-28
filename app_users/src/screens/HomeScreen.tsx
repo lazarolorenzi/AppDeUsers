@@ -30,7 +30,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
 
   const deleteUser = async (userId: number) => {
     try {
-      await axios.delete(`http://localhost:3000/users/${userId}`);
+      await axios.delete(`http://192.168.1.117/users/${userId}`);
       Alert.alert('Sucesso', 'Usuário excluído com sucesso!');
       setUsers(users.filter((user) => user.id !== userId));
     } catch (error) {
